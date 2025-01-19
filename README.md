@@ -1,16 +1,18 @@
-Here’s the `README.md` content that you can directly copy and use in your repository:
+# OmniFace: Comprehensive Face Detection and Profiling System
 
-```markdown
-# OmniFace: Multi-Attribute Classification System
+OmniFace is an advanced multi-attribute classification system leveraging deep learning to detect and classify faces based on demographic attributes such as age, gender, and ethnicity. It combines state-of-the-art computer vision techniques with a robust neural network architecture.
 
-OmniFace is a deep learning-based multi-attribute classification system for detecting and classifying human faces based on age, gender, and race. This project utilizes computer vision techniques and a multi-output neural network.
+---
 
-## Features
+## Key Features
 
-- Detects faces in images using a pre-trained face detection model.
-- Predicts **age**, **gender**, and **race** attributes for detected faces.
-- Multi-output neural network architecture with separate outputs for each attribute.
-- Utilizes UTKFace and WIDER Face datasets for training and evaluation.
+- **Face Detection**: Utilizes pre-trained models for high-accuracy face detection.
+- **Demographic Classification**: Predicts age, gender, and ethnicity for each detected face.
+- **Multi-Output Neural Network**: Handles multiple outputs (age, gender, ethnicity) with shared feature extraction layers.
+- **Customizable Inference**: Easily adapt the model for custom datasets or tasks.
+- **Efficient Data Pipeline**: Simplifies dataset preprocessing and augmentation.
+
+---
 
 ## Project Structure
 
@@ -19,77 +21,121 @@ OmniFace/
 ├── data/
 │   └── dataset/          # Placeholder for datasets
 ├── notebooks/
-│   ├── training.ipynb    # Training notebook
-│   ├── evaluation.ipynb  # Evaluation notebook
-│   └── inference.ipynb   # Inference notebook for custom images
+│   ├── 17-10-24_BoundingBoxGen.ipynb   # Bounding box generator notebook
+│   ├── final_multimodel.ipynb          # Training and evaluation notebook
+│   ├── inference.ipynb                 # Inference notebook for custom images
 ├── src/
-│   ├── train.py          # Training script
-│   ├── evaluate.py       # Evaluation script
-│   ├── predict.py        # Custom image prediction
-│   └── model.py          # Model architecture definition
-├── requirements.txt      # Dependencies
-└── README.md             # Project documentation
+│   ├── train.py                        # Training script
+│   ├── evaluate.py                     # Evaluation script
+│   ├── predict.py                      # Custom image prediction
+│   ├── model.py                        # Model architecture definition
+│   ├── data_preprocessing.py           # Dataset loading and preprocessing
+│   ├── bounding_box.py                 # Bounding box generator module
+├── tests/
+│   ├── test_train.py                   # Unit tests for training pipeline
+│   ├── test_model.py                   # Unit tests for model architecture
+├── requirements.txt                    # Dependencies
+├── README.md                           # Project documentation
+└── LICENSE                             # Project license
 ```
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.7 or higher
-- TensorFlow 2.x
-- Install project dependencies:
+- Python 3.8 or higher
+- NVIDIA GPU with CUDA (optional for faster training)
+- Install dependencies:
   ```bash
   pip install -r requirements.txt
   ```
 
-### Training the Model
+---
 
-1. Prepare the dataset and place it in the `data/dataset` directory.
-2. Run the `notebooks/training.ipynb` notebook to train the model.
+## Usage
 
-### Evaluation
+### 1. Dataset Preparation
 
-Use the `notebooks/evaluation.ipynb` to evaluate the model's performance on the test dataset.
+- Download the [UTKFace Dataset](https://susanqq.github.io/UTKFace/) and [WIDER Face Dataset](https://universe.roboflow.com/large-benchmark-datasets/wider-face-ndtcz).
+- Place datasets in the `data/dataset/` directory.
 
-### Inference
+### 2. Training the Model
 
-To test the model on a custom image:
-1. Place the image in a known directory (e.g., `/path/to/image.jpg`).
-2. Run the `notebooks/inference.ipynb` notebook or execute the following script:
-   ```bash
-   python src/predict.py --image_path /path/to/image.jpg
-   ```
+Train the multi-output model using the following command:
+```bash
+python src/train.py
+```
 
-### Results
+### 3. Evaluation
 
-The model predicts:
-- **Age:** An integer representing the estimated age.
-- **Gender:** Male or Female.
-- **Race:** One of the following categories: White, Black, Asian, Indian, or Other.
+Evaluate model performance on validation data:
+```bash
+python src/evaluate.py
+```
 
-### Example Output
+### 4. Custom Inference
 
-Input Image:
+Generate predictions for custom images:
+```bash
+python src/predict.py --image_path /path/to/image.jpg
+```
 
+---
+
+## Results
+
+The system outputs a structured profile for each detected face, including:
+- **Age**: Predicted as an integer (e.g., 25).
+- **Gender**: Predicted as "Male" or "Female".
+- **Ethnicity**: One of the predefined categories (e.g., Asian, African, etc.).
+
+### Example
+
+**Input Image:**
 ![Example Input](https://via.placeholder.com/150)
 
-Predicted:
-- **Gender:** Male
-- **Age:** 25
-- **Race:** Asian
+**Predicted Output:**
+```json
+{
+  "Age": 25,
+  "Gender": "Male",
+  "Ethnicity": "Asian"
+}
+```
 
-## Acknowledgments
+---
 
-- [UTKFace Dataset](https://susanqq.github.io/UTKFace/)
-- [WIDER Face Dataset](http://shuoyang1213.me/WIDERFACE/)
+## Testing
+
+Run unit tests to ensure the codebase is functional:
+```bash
+pytest tests/
+```
+
+---
+
+## Future Enhancements
+
+- **Real-Time Analysis**: Implement live video processing.
+- **Emotion Detection**: Add emotional state classification.
+- **Mobile Deployment**: Develop a lightweight version for mobile devices.
+- **Explainability**: Integrate model interpretability tools.
+
+---
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
 
-### Instructions
-1. Copy this content into a file named `README.md` in your project repository.
-2. Commit the file with a message like `Add README.md`.
+---
 
-Let me know if you'd like help with further steps!
+## Authors
+
+- **M.K.T.S. Thilakarathna (2020/E/159)**
+- **A.B. Weerakoon (2020/E/169)**
+
+---
+
+We welcome contributions and feedback to improve OmniFace. Feel free to open issues or submit pull requests!
